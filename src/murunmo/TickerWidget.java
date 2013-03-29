@@ -1,3 +1,4 @@
+package murunmo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -28,7 +29,7 @@ public class TickerWidget extends Dialog {
 	
 	public boolean hide;	// 티커를 숨길지 여부
 	
-	private final int TIMER_INTERVAL = 30; 	// 티커의 에니메이션 업데이트 간격 ( 리눅스의 경우 50이 적당합니다  그 이상은 cpu 부하 )
+	private final int TIMER_INTERVAL = 40; 	// 티커의 에니메이션 업데이트 간격 ( 리눅스의 경우 50이 적당합니다  그 이상은 cpu 부하 )
 	private boolean autoScroll;				// 자동 스크롤 여부
 	private boolean resize;					// 크기 재정의 여부
 	private Point origin;		
@@ -65,6 +66,7 @@ public class TickerWidget extends Dialog {
 				display.timerExec(TIMER_INTERVAL, this);
 			}
 		};
+		
 		display.timerExec(TIMER_INTERVAL, runnable);
 		
 		return result;
@@ -94,7 +96,6 @@ public class TickerWidget extends Dialog {
 			   		if(autoScroll) fc.x-=2;
 	    	  		// 피드가 화면에서 사라지면 위치 재정의
 	    	  		if(fc.x <= -fc.width ) fc.x += Feed.getInstance().totalWidth;
-			    	  
 				}
 			   	event.gc.drawImage(image, 0, 0);
 			   	image.dispose();
@@ -117,7 +118,7 @@ public class TickerWidget extends Dialog {
 		final Cursor cursorSizeEE = new Cursor(Display.getDefault(), SWT.CURSOR_SIZEE);
 		
 		canvas.addMouseMoveListener(new MouseMoveListener() {
-			@Override
+			
 			public void mouseMove(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if (origin != null) {	// 티커 이동 및 티커 조절을 위한 Point 생성
@@ -128,6 +129,7 @@ public class TickerWidget extends Dialog {
 				if (resize) {	// 티커 크기 조절
 					shell.setSize(e.x+5,shell.getSize().y);
 		            }
+				
 			}
 		});
 			canvas.addMouseListener(new MouseListener() { // 마우스 클릭시 이벤트
@@ -253,7 +255,7 @@ public class TickerWidget extends Dialog {
 		this.shell.setText(getText());
 		this.shell.setLayout(new FillLayout());
 
-		this.canvas = new Canvas(shell, SWT.DOUBLE_BUFFERED); // 더블 버퍼 옵션
+		this.canvas = new Canvas(shell, SWT.NO_REDRAW_RESIZE); // 더블 버퍼 옵션
 		this.canvas.setBackground(new Color(Display.getDefault(),PreInfo.getInstance().backgroundColor));
 		this.canvas.setForeground(new Color(Display.getDefault(),PreInfo.getInstance().fontColor));
 			

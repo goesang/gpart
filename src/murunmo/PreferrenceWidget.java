@@ -1,3 +1,4 @@
+package murunmo;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -382,22 +383,20 @@ public class PreferrenceWidget extends Dialog {
 	                
 	                spin.addSelectionListener(new SelectionAdapter() {
 	                  public void widgetSelected(SelectionEvent event) {
-	                    item.setText(col, spin.getText());
+	                    item.setText(col, spin.getDigits()+"");
 	                  }
 	                });
 	                
 	                spin.addFocusListener(new FocusListener() {
 						
-						@Override
-						public void focusLost(FocusEvent e) {
+						public void focusLost(FocusEvent arg0) {
 							// TODO Auto-generated method stub
 							spin.setVisible(false);
 						}
 						
-						@Override
-						public void focusGained(FocusEvent e) {
+						public void focusGained(FocusEvent arg0) {
 							// TODO Auto-generated method stub
-
+							
 						}
 					});
 
@@ -420,13 +419,11 @@ public class PreferrenceWidget extends Dialog {
 	               						});
 	               text.addFocusListener(new FocusListener() {
 					
-					@Override
 					public void focusLost(FocusEvent e) {
 						// TODO Auto-generated method stub
 						text.setVisible(false);
 					}
 					
-					@Override
 					public void focusGained(FocusEvent e) {
 						// TODO Auto-generated method stub
 						

@@ -1,3 +1,4 @@
+package murunmo;
 import java.io.File;
 
 import org.eclipse.swt.SWT;
@@ -63,11 +64,7 @@ public class TrayWidget extends Dialog {
 		shell.setSize(450, 300);
 		shell.setText(getText());
 		// 트레이의 아이콘을 불러옴
-		String strPath = "";
-		if(System.getProperty("os.name").indexOf("Linux") == 0)
-			strPath = "/usr/share/GPART/resources/gpart.png";
-		else 
-			strPath = "resources"+File.separator+"gpart.png";
+		String strPath = "resources"+File.separator+"img"+File.separator+"gpart.png";
 		Image image = new Image(shell.getDisplay(),strPath);
 
 		final Tray tray = shell.getDisplay().getSystemTray();
@@ -165,15 +162,16 @@ public class TrayWidget extends Dialog {
 				
 				final String postLink = feedChild.postLink;
 				rssChild.addSelectionListener(new SelectionListener() {
-					// rss 서브 메뉴 클릭시 링크
-					@Override
+					
 					public void widgetSelected(SelectionEvent e) {
 						// TODO Auto-generated method stub
 						Program.launch(postLink);
 					}
 					
-					@Override
-					public void widgetDefaultSelected(SelectionEvent e) {	}
+					public void widgetDefaultSelected(SelectionEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
 				});
 			}
 		}

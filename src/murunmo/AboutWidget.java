@@ -1,3 +1,4 @@
+package murunmo;
 import java.io.File;
 
 import org.eclipse.swt.SWT;
@@ -102,11 +103,7 @@ public class AboutWidget extends Dialog {
 		    	  Program.launch(Messages.AboutWidget_link);
 		      }
 		    });
-		String strPath = "";
-		if(System.getProperty("os.name").indexOf("Linux") == 0)
-			strPath = "/usr/share/GPART/resources/gpart.png";
-		else 
-			strPath = "resources"+File.separator+"gpart.png";
+		String strPath = "resources"+File.separator+"img"+File.separator+"gpart.png";
 		final Image image = new Image(shell.getDisplay(),strPath);
 		Canvas canvas = new Canvas(composite, SWT.NONE);
 		canvas.setBounds(85, 10, 95, 95);

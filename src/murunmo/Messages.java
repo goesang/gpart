@@ -1,3 +1,4 @@
+package murunmo;
 import org.eclipse.osgi.util.NLS;
 // 프로그램에 표시될 텍스트들
 public class Messages extends NLS {
