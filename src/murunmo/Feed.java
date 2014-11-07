@@ -31,6 +31,7 @@ public class Feed {
 	}
 	
 	public void load(){
+		System.gc();
 		this.totalWidth = 0; // 피드의 길이를 0으로 초기화
 
 		PreInfo.getInstance().load(); // 티커의 설정하는 정보를 불러옴

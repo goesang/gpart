@@ -29,7 +29,7 @@ public class TickerWidget extends Dialog {
 	
 	public boolean hide;	// 티커를 숨길지 여부
 	
-	private final int TIMER_INTERVAL = 40; 	// 티커의 에니메이션 업데이트 간격 ( 리눅스의 경우 50이 적당합니다  그 이상은 cpu 부하 )
+	private final int TIMER_INTERVAL = 35; 	// 티커의 에니메이션 업데이트 간격 ( 리눅스의 경우 50이 적당합니다  그 이상은 cpu 부하 )
 	private boolean autoScroll;				// 자동 스크롤 여부
 	private boolean resize;					// 크기 재정의 여부
 	private Point origin;		
@@ -92,8 +92,9 @@ public class TickerWidget extends Dialog {
 					// 피드의 내용을 확인하여 티커창 안에 피드가 위치하면 화면에 그림
 			   		if(fc.x>-fc.width && fc.x <shell.getSize().x)
 			   			gcImage.drawText(fc.postTitle, fc.x,3);
+			   		
 			   		// 피드를 전체적으로 왼쪽으로 옮김
-			   		if(autoScroll) fc.x-=2;
+			   		if(autoScroll) fc.x-=3;
 	    	  		// 피드가 화면에서 사라지면 위치 재정의
 	    	  		if(fc.x <= -fc.width ) fc.x += Feed.getInstance().totalWidth;
 				}
@@ -142,7 +143,6 @@ public class TickerWidget extends Dialog {
 							canvas.setCursor(cursorSizeEE);
 						}else{ // 내부를 클릭하면 클릭한 피드의 주소에 따라 링크 
 							for(FeedChild fc : Feed.getInstance().getFlattenChildList()){
-								
 								if( e.x >= fc.x && 
 									e.x <= fc.x+fc.width && 
 									e.x <= shell.getSize().x -10 )
@@ -255,7 +255,7 @@ public class TickerWidget extends Dialog {
 		this.shell.setText(getText());
 		this.shell.setLayout(new FillLayout());
 
-		this.canvas = new Canvas(shell, SWT.NO_REDRAW_RESIZE); // 더블 버퍼 옵션
+		this.canvas = new Canvas(shell, SWT.DOUBLE_BUFFERED); // 더블 버퍼 옵션
 		this.canvas.setBackground(new Color(Display.getDefault(),PreInfo.getInstance().backgroundColor));
 		this.canvas.setForeground(new Color(Display.getDefault(),PreInfo.getInstance().fontColor));
 			

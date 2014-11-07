@@ -370,7 +370,7 @@ public class PreferrenceWidget extends Dialog {
 	            }
 
 	            if (column == 2) {	// 두번째 칼럼을 클릭했을때
-	                final Spinner spin = new Spinner(table, SWT.READ_ONLY);
+	                final Spinner spin = new Spinner(table, SWT.NONE);
 	                spin.setValues(Integer.parseInt(item.getText(column)), 0, 30, 0, 1, 5);
 	                // spinner를 생성한다.
 	                editor.minimumWidth = 48;
@@ -380,10 +380,9 @@ public class PreferrenceWidget extends Dialog {
 	                editor.setEditor(spin, item, column);
 	                
 	                final int col = column;
-	                
 	                spin.addSelectionListener(new SelectionAdapter() {
 	                  public void widgetSelected(SelectionEvent event) {
-	                    item.setText(col, spin.getDigits()+"");
+	                    item.setText(col, spin.getText());
 	                  }
 	                });
 	                
@@ -574,7 +573,6 @@ public class PreferrenceWidget extends Dialog {
 	    		final ArrayList<String> feedItemList = new ArrayList<String>();
 	    		for(int i = 0;i<table.getItemCount();i++){
 	    			feedItemList.add(table.getItem(i).getText(0)+"@w@"+table.getItem(i).getText(1)+"@w@"+table.getItem(i).getText(2)); 
-	    			System.out.println(table.getItem(i).getText(0));
 	    		}// 글꼴과 글의 크기를 설정시 세로길이를 측정 하여 저장
 			    Text text = new Text(shlGpartPreferrence, SWT.NONE);
 			    text.setText("AAA");
