@@ -86,8 +86,7 @@ public class PreInfo {
 						MessageDialog.openError(new Shell(), "Error", "directory create error"); 
 					this.filePath += File.separator;
 					ArrayList<String> feedItem = new ArrayList<String>();
-					feedItem.add("Twitter / firefox@w@http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=firefox@w@10");
-					feedItem.add("Twitter / Linux@w@http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=Linux@w@10");
+					feedItem.add("hello world: NHN@w@http://helloworld.naver.com/rss@w@10");
 					this.save(0, 0, 900, 17, 
 							30, 300, 30, false, 
 							false, new FontData("Sans",10,0),
