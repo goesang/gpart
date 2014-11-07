@@ -1,0 +1,2 @@
+swt - http://www.eclipse.org/swt/
+equinox - http://www.eclipse.org/equinox/
