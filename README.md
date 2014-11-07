@@ -1,4 +1,4 @@
-### GPART 소개 ( Introduce ) 
+## GPART 소개 ( Introduce ) 
 ![](http://dev.naver.com/wiki/gpart/pds/FrontPage/1.png)
 
 ( 우분투 리눅스(ubuntu)에서 돌아가는 모습 )
@@ -23,8 +23,8 @@ RSS 1.0과 2.0 버젼이 구독 가능하며 트위터(Twitter)의 글도 구독
 
 ( 비슷한 프로그램으로 [yassr](http://yarssr.sourceforge.net/)가 있습니다. )
 
-###사용법 ( Tutorial )
-#### 티커 기본 조작 방법 ( Ticker Basic Control )
+##사용법 ( Tutorial )
+### 티커 기본 조작 방법 ( Ticker Basic Control )
 ![](http://dev.naver.com/wiki/gpart/pds/FrontPage/2_1.png)
 
  * 마우스 오른쪽 버튼 클릭 + 드래그  =>  티커 이동 
@@ -42,13 +42,15 @@ RSS 1.0과 2.0 버젼이 구독 가능하며 트위터(Twitter)의 글도 구독
  * 티커 오른쪽 부분에서 마우스 오른쪽 버튼 클릭 + 드래그 => 티커 크기 조정 
 ( The right side of ticker + Mouse Right Button Clcik + Drag  => Ticker resize )
 
-#### 트레이 기본 조작 방법 ( Tray Basic Control )
+### 트레이 기본 조작 방법 ( Tray Basic Control )
 ![](http://dev.naver.com/wiki/gpart/pds/FrontPage/3_1.png)
  * 마우스 왼쪽 버튼 클릭 =>  티커 숨김
 ( Mouse Left Button Clcik => Ticker Hide )
  * 마우스 오른쪽 버튼 클릭 =>  메뉴 보기 
 ( Mouse Right Button Clcik => Menu Show )
-#### 트위터 추가하기 ( Adding Twitter )
+
+### 트위터 추가하기 ( Adding Twitter )
+
 ![](http://dev.naver.com/wiki/gpart/pds/FrontPage/4.png)
 
  * 마우스 오른쪽 버튼으로 클릭 트레이 클릭  ->  메뉴에서 환경설정 선택
@@ -70,7 +72,7 @@ RSS 1.0과 2.0 버젼이 구독 가능하며 트위터(Twitter)의 글도 구독
 
 ![](http://dev.naver.com/wiki/gpart/pds/FrontPage/7_1.png)
 
-### 설치방법 ( Download and Install )
+## 설치방법 ( Download and Install )
 
  * 프로그램이 자바로 작성되었기 때문에 [자바 실행 버젼]( http://www.oracle.com/technetwork/java/javase/downloads/index.html )을 먼저 설치하시기 바랍니다.
 
@@ -99,13 +101,13 @@ RSS 1.0과 2.0 버젼이 구독 가능하며 트위터(Twitter)의 글도 구독
 
 * Linux 상에서는 Console에 ' java -jar /usr/share/GPART/gpart.jar ' 을 입력하셔서 실행(excute)하시면 됩니다. 
 
-### 프로젝트 참여방법 ( Project )
+## 프로젝트 참여방법 ( Project )
  * 그냥 프로그램의 버그를 알려주시거나 사용 소감을 게시판에 써주시는 것 만으로도  큰 도움이 됩니다.
 
  * 만일 같이 코딩하실 의향이 있으시다면 저한테 메일을 보내주시면 됩니다! 
  ( rootroot2@gmail.com ) 
 
-### 라이선스 ( License )
+## 라이선스 ( License )
 The MIT License
 
 Copyright (c) 2011 minsoo go
