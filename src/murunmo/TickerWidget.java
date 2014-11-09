@@ -255,7 +255,7 @@ public class TickerWidget extends Dialog {
 		this.shell.setText(getText());
 		this.shell.setLayout(new FillLayout());
 
-		this.canvas = new Canvas(shell, SWT.DOUBLE_BUFFERED); // 더블 버퍼 옵션
+		this.canvas = new Canvas(shell, SWT.NO_BACKGROUND|SWT.NO_REDRAW_RESIZE|SWT.NO_MERGE_PAINTS| SWT.DOUBLE_BUFFERED); // 더블 버퍼 옵션
 		this.canvas.setBackground(new Color(Display.getDefault(),PreInfo.getInstance().backgroundColor));
 		this.canvas.setForeground(new Color(Display.getDefault(),PreInfo.getInstance().fontColor));
 			
@@ -285,7 +285,7 @@ public class TickerWidget extends Dialog {
 	
 		
 		this.canvas.dispose();
-		this.canvas = new Canvas(this.shell, SWT.DOUBLE_BUFFERED);
+		this.canvas = new Canvas(this.shell,  SWT.NO_BACKGROUND|SWT.NO_REDRAW_RESIZE|SWT.NO_MERGE_PAINTS| SWT.DOUBLE_BUFFERED);
 		this.canvas.setBackground(new Color(Display.getDefault(),PreInfo.getInstance().backgroundColor));
 		this.canvas.setForeground(new Color(Display.getDefault(),PreInfo.getInstance().fontColor));
 		
