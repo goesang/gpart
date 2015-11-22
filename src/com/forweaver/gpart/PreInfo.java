@@ -1,4 +1,4 @@
-package murunmo;
+package com.forweaver.gpart;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -66,8 +66,8 @@ public class PreInfo {
 						MessageDialog.openError(new Shell(), "Error", "directory create error"); 
 					this.filePath += File.separator;
 					ArrayList<String> feedItem = new ArrayList<String>();
-					feedItem.add("Twitter / firefox@w@http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=firefox@w@10");
-					feedItem.add("Twitter / Linux@w@http://api.twitter.com/1/statuses/user_timeline.rss?screen_name=Linux@w@10");
+					feedItem.add("Stack Overflow@w@http://stackoverflow.com/feeds@w@15");
+					feedItem.add("google news korea@w@https://news.google.co.kr/news?cf=all&hl=ko&pz=1&ned=kr&output=rss@w@15");
 					this.save(0, 0, 900, 17, 
 							30, 300, 30, false, 
 							false, new FontData("Sans",10,0),
@@ -77,16 +77,20 @@ public class PreInfo {
 				}
 			}//만일 윈도우일 경우 유저 이름으로 폴더를 만들고 설정 파일을 생성한다
 			else{
-				this.filePath = System.getProperty("user.name");
+				this.filePath = "C:"+File.separator+"Users"+File.separator+System.getProperty("user.name")+File.separator+"gpart";
 				File dir = new File(filePath);
+					
 				if(dir.isDirectory())
 					this.filePath += File.separator;
 				else{
+					MessageDialog.openError(new Shell(), Messages.Alert, Messages.Alert_Create_Direcitory+" "+filePath); 
 					if (!dir.mkdirs())
-						MessageDialog.openError(new Shell(), "Error", "directory create error"); 
+						MessageDialog.openError(new Shell(), Messages.Error, Messages.Error); 
 					this.filePath += File.separator;
 					ArrayList<String> feedItem = new ArrayList<String>();
-					feedItem.add("hello world: NHN@w@http://helloworld.naver.com/rss@w@10");
+					feedItem.add("Stack Overflow@w@http://stackoverflow.com/feeds@w@15");
+					feedItem.add("google news korea@w@https://news.google.co.kr/news?cf=all&hl=ko&pz=1&ned=kr&output=rss@w@15");
+					
 					this.save(0, 0, 900, 17, 
 							30, 300, 30, false, 
 							false, new FontData("Sans",10,0),
@@ -139,7 +143,7 @@ public class PreInfo {
 			   gpartFeedItemFile.close();
 			   
 			 }catch(Exception e){
-				 MessageDialog.openError(new Shell(), "Error", "file load error");
+				 MessageDialog.openError(new Shell(), Messages.Error, e.getMessage());
 			 }
 	}
 	// 수정된 정보를 파일에 다시 저장함
@@ -180,18 +184,26 @@ public class PreInfo {
 			   
 			   bufferWriter.close();
 			   gpartSetFile.close();
-			   
+			  
 			   FileWriter gpartFeedItemFile = new FileWriter(filePath+"gpartFeedItem");
 			   bufferWriter = new BufferedWriter(gpartFeedItemFile);
 			   for (String str : feedItem)
 				   bufferWriter.write(str+"\n");
 			   bufferWriter.close();
 			   gpartFeedItemFile.close();
-			   
 			 }catch(Exception e){
-				 MessageDialog.openError(new Shell(), "Error", e.getMessage());
+				 MessageDialog.openError(new Shell(), Messages.Error, e.getMessage());
 			 }
 	}
+	
+	// 수정된 정보를 파일에 다시 저장함
+		public void save(int positionX,
+						int positionY,
+						int width){
+			this.load();
+			System.out.println(spacing);
+			this.save(positionX, positionY, width, fontHeight,spacing,descLength,updateInterval, hideTicker, onTop, fontStyle, fontColor, backgroundColor, feedItem);
+		}
 	
 	
 }

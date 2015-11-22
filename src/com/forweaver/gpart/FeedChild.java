@@ -1,4 +1,4 @@
-package murunmo;
+package com.forweaver.gpart;
 // 자식 피드로 읽어온 피드의 제목,내용,날짜,주소 및 
 // 티커의 표시용으로 쓰일 x축, 길이, 클릭 여부가 저장되는 클래스
 public class FeedChild {

@@ -1,4 +1,4 @@
-package murunmo;
+package com.forweaver.gpart;
 import org.eclipse.osgi.util.NLS;
 // 프로그램에 표시될 텍스트들
 public class Messages extends NLS {
@@ -29,7 +29,6 @@ public class Messages extends NLS {
 	public static String PreferrenceWidget_feedUrl;
 	public static String PreferrenceWidget_fontColor;
 	public static String PreferrenceWidget_fontStyle;
-	public static String PreferrenceWidget_getCurrent;
 	public static String PreferrenceWidget_hide;
 	public static String PreferrenceWidget_ok;
 	public static String PreferrenceWidget_remove;
@@ -54,12 +53,16 @@ public class Messages extends NLS {
 	public static String TrayWidget_rssUpdate;
 	public static String TrayWidget_systemError;
 	public static String TrayWidget_title;
+	public static String Alert;
+	public static String Alert_Create_Direcitory;
+	public static String Error;
+	public static String Error_Create_Direcitory;
 	static {
 		// initialize resource bundle
 		if(System.getProperty("user.language").indexOf("ko") == 0)
-			NLS.initializeMessages("ko", Messages.class);
+			NLS.initializeMessages("language/ko", Messages.class);
 		else
-			NLS.initializeMessages("en", Messages.class);
+			NLS.initializeMessages("language/en", Messages.class);
 		
 	}
 

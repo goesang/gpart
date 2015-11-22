@@ -1,6 +1,9 @@
-package murunmo;
+package com.forweaver.gpart;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+
+import com.forweaver.gpart.gui.TickerWidget;
+import com.forweaver.gpart.gui.TrayWidget;
 
 // 실제 실행을 담당하는 main 메서드
 public class Main {

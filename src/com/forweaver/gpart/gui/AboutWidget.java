@@ -1,4 +1,4 @@
-package murunmo;
+package com.forweaver.gpart.gui;
 import java.io.File;
 
 import org.eclipse.swt.SWT;
@@ -23,6 +23,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+
+import com.forweaver.gpart.Messages;
 
 //프로그램 제작자 소개 및 저작권 관련 소개 창
 public class AboutWidget extends Dialog {
@@ -96,15 +98,14 @@ public class AboutWidget extends Dialog {
 		lblNewLabel_1.setText(Messages.AboutWidget_copyright);
 		
 		Link link = new Link(composite, SWT.NONE);
-		link.setBounds(48, 201, 185, 15);
+		link.setBounds(40, 201, 225, 15);
 		link.setText(Messages.AboutWidget_url);
 		link.addListener(SWT.Selection, new Listener() {
 		      public void handleEvent(Event event) {
 		    	  Program.launch(Messages.AboutWidget_link);
 		      }
 		    });
-		String strPath = "resources"+File.separator+"img"+File.separator+"gpart.png";
-		final Image image = new Image(shell.getDisplay(),strPath);
+		final Image image = new Image(shell.getDisplay(),this.getClass().getResourceAsStream("/img/gpart.png"));
 		Canvas canvas = new Canvas(composite, SWT.NONE);
 		canvas.setBounds(85, 10, 95, 95);
 		canvas.addPaintListener(new PaintListener() {

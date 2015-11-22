@@ -1,6 +1,4 @@
-package murunmo;
-import java.io.File;
-
+package com.forweaver.gpart.gui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -15,13 +13,19 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
+
+import com.forweaver.gpart.Feed;
+import com.forweaver.gpart.FeedChild;
+import com.forweaver.gpart.FeedParent;
+import com.forweaver.gpart.Messages;
+import com.forweaver.gpart.PreInfo;
 // SWT로 구현된 티커를 관리할 트레이 클래스 
 public class TrayWidget extends Dialog {
 	// 싱글톤으로 구현
 	private static TrayWidget single = 
 		new TrayWidget(Shell.internal_new(Display.getCurrent(), SWT.NONE),SWT.NONE);
 	// 분단위 읽어오기를 위한 상수
-	final static int TIME = 60000;
+	final static int TIME = 1000 * 60;
 	
 	private MenuItem menuItemRSS;
 	private int menuItemRSSIndex = 3;
@@ -64,8 +68,7 @@ public class TrayWidget extends Dialog {
 		shell.setSize(450, 300);
 		shell.setText(getText());
 		// 트레이의 아이콘을 불러옴
-		String strPath = "resources"+File.separator+"img"+File.separator+"gpart.png";
-		Image image = new Image(shell.getDisplay(),strPath);
+		Image image = new Image(shell.getDisplay(),this.getClass().getResourceAsStream("/img/gpart.png"));
 
 		final Tray tray = shell.getDisplay().getSystemTray();
 		if (tray == null) {
