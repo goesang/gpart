@@ -31,7 +31,6 @@ public class Feed {
 	}
 	
 	public void load(){
-		System.gc();
 		this.totalWidth = 0; // 피드의 길이를 0으로 초기화
 
 		PreInfo.getInstance().load(); // 티커의 설정하는 정보를 불러옴
@@ -96,10 +95,10 @@ public class Feed {
 		
 		for(final FeedChild feedChild : flattenChildList){
 			//피드의 제목이 너무 길면 짜름
-			if(feedChild.postTitle.length() > 60)
+			if(feedChild.postTitle.length() > 50)
 				feedChild.postTitle =	feedChild.
 				postTitle.
-				substring(0, 60)+"...";
+				substring(0, 50)+"...";
 			//피드의 내용이 너무 길면 짜름	
 			if(feedChild.postContent.length() > PreInfo.getInstance().descLength)
 				feedChild.postContent = feedChild.

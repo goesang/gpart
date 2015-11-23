@@ -31,64 +31,11 @@ public class FeedParent extends Thread {
 
 	public void run() {	// 병렬화 하여 피드들읠 긁어 오는 메서드
 		try{
-			//RSS를 파싱하기 위한 초기화
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			URL url = new URL(this.url); 
-			URLConnection conn = url.openConnection();
-           conn.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0");
-			conn.connect();
-			Document doc = builder.parse(conn.getInputStream(),"utf-8");
-			doc.getDocumentElement().normalize();
-			
-			boolean isRss=false;
-			
-			if(doc.getElementsByTagName("rss").getLength() == 1) //RSS인지 판별
-				isRss= true;
-			
-			NodeList itemLst;
-			
-			if(isRss)
-				itemLst = doc.getElementsByTagName("item"); //RSS라면 item을
+			String url = Parser.getNameInFacebookURL(this.url);
+			if(!url.equals(""))
+				Parser.getFeedInFacebookURl(url, this.limit, this.feedChildList);
 			else
-				itemLst = doc.getElementsByTagName("entry"); //Atom이라면 entry를
-			
-			for(int i=0; (i < itemLst.getLength()) && (i < this.limit); i++){
-				Node item = itemLst.item(i);
-				Element itemTmp = (Element)item;
-
-				FeedChild fc = new FeedChild();
-
-				NodeList title = itemTmp.getElementsByTagName("title");
-				NodeList link = itemTmp.getElementsByTagName("link");
-				NodeList description;
-				NodeList date;
-				if(isRss){
-					description = itemTmp.getElementsByTagName("description");
-					date = itemTmp.getElementsByTagName("pubDate");
-					if(date.getLength() == 0)
-						date = itemTmp.getElementsByTagName("dc:date");
-					fc.postLink = link.item(0).getTextContent();
-				}else{
-					description = itemTmp.getElementsByTagName("summary");
-					if(description.getLength() == 0)
-						description = itemTmp.getElementsByTagName("content");
-					date = itemTmp.getElementsByTagName("published");
-					if(date.getLength() == 0)
-						date = itemTmp.getElementsByTagName("updated");
-					Element element = (Element) link.item(0);
-					fc.postLink = element.getAttribute("href");
-				}				
-				fc.postTitle = title.item(0).getTextContent();
-				
-				fc.postDate = date.item(0).getTextContent();
-				fc.postContent = description.item(0).getTextContent();
-				fc.postContent = fc.postContent.replaceAll("\\<[^>]*>","");
-				fc.postContent= fc.postContent.replaceAll("\r|\n|&nbsp;","").trim();
-
-				this.feedChildList.add(fc);
-
-			}
+				Parser.getFeedInXMLURL(this.url, this.limit, this.feedChildList);
 		}
 		catch(Exception e){}
 		finally {runNum++;	} // 실행이 끝나면 횟수를 증가시킨다.

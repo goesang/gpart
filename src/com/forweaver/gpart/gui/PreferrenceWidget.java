@@ -56,6 +56,7 @@ import org.w3c.dom.NodeList;
 import com.forweaver.gpart.Feed;
 import com.forweaver.gpart.Messages;
 import com.forweaver.gpart.PreInfo;
+import com.forweaver.gpart.Parser;
 
 //SWT로 구현한 프로그램의 환경설정창
 public class PreferrenceWidget extends Dialog {
@@ -462,37 +463,22 @@ public class PreferrenceWidget extends Dialog {
 		btnAdd.addSelectionListener(new SelectionAdapter() { //피드를 추가하는 부분
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				
 				String urlStr = textURL.getText();
 				textURL.setText("");
 				//사이트의 정보를 읽어와서 이것이 RSS가 구독이 가능한지 여부를 판별하고 
 				//http://sirini.net/grboard2/blog/view/573
 				try{
-					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-					DocumentBuilder builder = factory.newDocumentBuilder();
-					URL url = new URL(urlStr); 
-					URLConnection conn = url.openConnection();
-					conn.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0");
-					conn.connect();
-					Document doc = builder.parse(conn.getInputStream(),"utf-8");
-					doc.getDocumentElement().normalize();
-					NodeList channel,itemlist;
-					if(doc.getElementsByTagName("rss").getLength()==1){ // rss의 경우
-						channel = doc.getElementsByTagName("channel"); //rss에서 channel 부분 파싱
-						itemlist = doc.getElementsByTagName("item"); //rss에서 item 부분 파싱
-					}else{
-						channel = doc.getElementsByTagName("feed"); //atom에서 feed 부분 파싱
-						itemlist = doc.getElementsByTagName("entry"); //atom에서 entry 부분 파싱
-					}
-					if(itemlist.getLength() == 0) // 읽어온 내용이 없으면 에러
-						throw new Exception(Messages.PreferrenceWidget_blankError);
+					String title = "";
+					
+					if(urlStr.startsWith("https://www.facebook.com") || Parser.isNumber(urlStr))
+						title = Parser.getTitleInFacebookURL(urlStr);
+					else
+						title = Parser.getTitleInXMLURL(urlStr);
 
-					Node item = channel.item(0);
-
-					if(item.getNodeType() == Node.ELEMENT_NODE){
-						Element itemTmp = (Element)item;
-						NodeList title = itemTmp.getElementsByTagName("title");
+					if(title.length() > 0){
 						TableItem tableItem = new TableItem(table, table.getItemCount());
-						tableItem.setText((title.item(0).getTextContent() +"@w@"+urlStr+"@w@5").split("@w@"));
+						tableItem.setText((title +"@w@"+urlStr+"@w@15").split("@w@"));
 					}
 
 				}//try

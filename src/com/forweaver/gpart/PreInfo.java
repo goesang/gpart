@@ -201,7 +201,6 @@ public class PreInfo {
 						int positionY,
 						int width){
 			this.load();
-			System.out.println(spacing);
 			this.save(positionX, positionY, width, fontHeight,spacing,descLength,updateInterval, hideTicker, onTop, fontStyle, fontColor, backgroundColor, feedItem);
 		}
 	

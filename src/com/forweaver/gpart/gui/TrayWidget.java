@@ -1,4 +1,5 @@
 package com.forweaver.gpart.gui;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -72,7 +73,7 @@ public class TrayWidget extends Dialog {
 
 		final Tray tray = shell.getDisplay().getSystemTray();
 		if (tray == null) {
-			System.out.println(Messages.TrayWidget_systemError);
+			 MessageDialog.openError(new Shell(), Messages.Error, Messages.TrayWidget_systemError);
 		} else {
 			final TrayItem item = new TrayItem(tray, SWT.NONE);
 			item.setToolTipText(Messages.TrayWidget_title);
@@ -109,6 +110,7 @@ public class TrayWidget extends Dialog {
 				public void handleEvent(Event event) {
 					Feed.getInstance().load();
 					recreateMenuRSS();
+					System.gc();
 				}
 			});
 
@@ -135,6 +137,7 @@ public class TrayWidget extends Dialog {
 				PreInfo.getInstance().load();
 				Feed.getInstance().load();
 				recreateMenuRSS();
+				System.gc();
 				shell.getDisplay().timerExec(TIME*PreInfo.getInstance().updateInterval, this);
 			}
 		};
