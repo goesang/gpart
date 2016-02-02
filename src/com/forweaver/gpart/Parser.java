@@ -14,6 +14,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import twitter4j.Paging;
+import twitter4j.Query;
+import twitter4j.QueryResult;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.User;
+import twitter4j.conf.ConfigurationBuilder;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
@@ -26,6 +35,28 @@ import facebook4j.auth.AccessToken;
 public class Parser {
 
 	private static String accessTokenString = "";
+	private static String oauthConsumerKey = "";
+	private static String oauthConsumerSecret = "";
+	private static String oauthAccessToken = "";
+	private static String oauthAccessTokenSecret = "";
+
+	public static String getTitleInTwitter(String urlStr) throws TwitterException{
+		if(urlStr.startsWith("#"))
+			return "Twitter - "+urlStr;
+		if(!urlStr.startsWith("@"))
+			return "";
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+		cb.setDebugEnabled(true)
+		.setOAuthConsumerKey(oauthConsumerKey)
+		.setOAuthConsumerSecret(oauthConsumerSecret)
+		.setOAuthAccessToken(oauthAccessToken)
+		.setOAuthAccessTokenSecret(oauthAccessTokenSecret);
+		TwitterFactory tf = new TwitterFactory(cb.build());
+		Twitter twitter = tf.getInstance();
+		User user = twitter.showUser(urlStr.substring(1));
+
+		return "Twitter - @"+user.getScreenName();
+	}
 
 	public static String getTitleInFacebookURL(String urlStr) throws FacebookException{
 		Facebook facebook = new FacebookFactory().getInstance();
@@ -86,16 +117,56 @@ public class Parser {
 		return "";
 	}
 
-	public static void getFeedInFacebookURl(String urlStr,int limit,ArrayList<FeedChild> feedChildList) throws FacebookException{
+	public static void getFeedInTwitter(FeedParent fp) throws TwitterException{
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+		cb.setDebugEnabled(true)
+		.setOAuthConsumerKey(oauthConsumerKey)
+		.setOAuthConsumerSecret(oauthConsumerSecret)
+		.setOAuthAccessToken(oauthAccessToken)
+		.setOAuthAccessTokenSecret(oauthAccessTokenSecret);
+		TwitterFactory tf = new TwitterFactory(cb.build());
+		Twitter twitter = tf.getInstance();
+
+		List<Status> statusList = null;
+
+		if(fp.url.startsWith("#")){
+			Query query = new Query(fp.url);
+			query.count(fp.limit);
+			QueryResult result = twitter.search(query);
+			statusList = result.getTweets();
+
+		}
+
+		if(fp.url.startsWith("@"))
+			statusList = twitter.getUserTimeline(fp.url.substring(1), new Paging(1, fp.limit));
+
+
+		for (Status status :  statusList)
+			if(status.getText() != null){
+				FeedChild fc = new FeedChild();
+
+				fc.postDate =status.getCreatedAt().toString();
+				fc.postContent = "@" + status.getUser().getScreenName() + " - " + status.getText();
+				fc.parentTitle = fp.title;
+				fc.postContent = fc.postContent.replaceAll("\\<[^>]*>","");
+				fc.postContent= fc.postContent.replaceAll("\r|\n|&nbsp;","").trim();
+				fc.postTitle = fc.postContent;
+				fc.postLink = "https://twitter.com/"+status.getUser().getScreenName()+"/status/"+status.getId();
+				fp.feedChildList.add(fc);
+			}
+	}
+
+	public static void getFeedInFacebookURl(FeedParent fp) throws FacebookException{
 		Facebook facebook = new FacebookFactory().getInstance();
 		facebook.setOAuthAppId("", "");
 		AccessToken at = new AccessToken(accessTokenString);
 		facebook.setOAuthAccessToken(at);
 		List<Post> posts = null;
+		String urlStr = getNameInFacebookURL(fp.url);
 		try{
-			posts = facebook.getFeed(urlStr,new Reading().limit(limit));
+			posts = facebook.getFeed(urlStr,new Reading().limit(fp.limit));
 		}catch(FacebookException e){
-			posts = facebook.getGroupFeed(urlStr,new Reading().limit(limit));
+			posts = facebook.getGroupFeed(urlStr,new Reading().limit(fp.limit));
 		}
 		for(Post feed:posts)
 			if(feed.getMessage() != null){
@@ -105,22 +176,22 @@ public class Parser {
 				else
 					fc.postDate =feed.getUpdatedTime().toString();
 				fc.postContent = feed.getMessage();
-
+				fc.parentTitle = fp.title;
 				fc.postContent = fc.postContent.replaceAll("\\<[^>]*>","");
 				fc.postContent= fc.postContent.replaceAll("\r|\n|&nbsp;","").trim();
 				fc.postTitle = fc.postContent;
 				fc.postLink = "https://www.facebook.com/"+feed.getId();
-				feedChildList.add(fc);
+				fp.feedChildList.add(fc);
 			}
-		
+
 
 	}
 
-	public static void getFeedInXMLURL(String urlStr,int limit,ArrayList<FeedChild> feedChildList) throws Exception{
+	public static void getFeedInXMLURL(FeedParent fp) throws Exception{
 		//RSS를 파싱하기 위한 초기화
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		URL url = new URL(urlStr); 
+		URL url = new URL(fp.url); 
 		URLConnection conn = url.openConnection();
 		conn.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0");
 		conn.connect();
@@ -139,7 +210,7 @@ public class Parser {
 		else
 			itemLst = doc.getElementsByTagName("entry"); //Atom이라면 entry를
 
-		for(int i=0; (i < itemLst.getLength()) && (i < limit); i++){
+		for(int i=0; (i < itemLst.getLength()) && (i < fp.limit); i++){
 			Node item = itemLst.item(i);
 			Element itemTmp = (Element)item;
 
@@ -166,13 +237,13 @@ public class Parser {
 				fc.postLink = element.getAttribute("href");
 			}				
 			fc.postTitle = title.item(0).getTextContent();
-
+			fc.parentTitle = fp.title;
 			fc.postDate = date.item(0).getTextContent();
 			fc.postContent = description.item(0).getTextContent();
 			fc.postContent = fc.postContent.replaceAll("\\<[^>]*>","");
 			fc.postContent= fc.postContent.replaceAll("\r|\n|&nbsp;","").trim();
 
-			feedChildList.add(fc);
+			fp.feedChildList.add(fc);
 		}
 
 	}

@@ -466,15 +466,15 @@ public class PreferrenceWidget extends Dialog {
 				
 				String urlStr = textURL.getText();
 				textURL.setText("");
-				//사이트의 정보를 읽어와서 이것이 RSS가 구독이 가능한지 여부를 판별하고 
-				//http://sirini.net/grboard2/blog/view/573
 				try{
 					String title = "";
 					
-					if(urlStr.startsWith("https://www.facebook.com") || Parser.isNumber(urlStr))
+					if(urlStr.startsWith("https://www.facebook.com") && !urlStr.contains("/feeds/") || Parser.isNumber(urlStr)) // facebook
 						title = Parser.getTitleInFacebookURL(urlStr);
+					else if(urlStr.startsWith("@") || urlStr.startsWith("#")) // twitter
+						title = Parser.getTitleInTwitter(urlStr);
 					else
-						title = Parser.getTitleInXMLURL(urlStr);
+						title = Parser.getTitleInXMLURL(urlStr); // rss or atom
 
 					if(title.length() > 0){
 						TableItem tableItem = new TableItem(table, table.getItemCount());

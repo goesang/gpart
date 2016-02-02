@@ -31,11 +31,13 @@ public class FeedParent extends Thread {
 
 	public void run() {	// 병렬화 하여 피드들읠 긁어 오는 메서드
 		try{
-			String url = Parser.getNameInFacebookURL(this.url);
-			if(!url.equals(""))
-				Parser.getFeedInFacebookURl(url, this.limit, this.feedChildList);
+			if((this.url.startsWith("https://www.facebook.com")&&!this.url.contains("/feeds/"))
+					|| Parser.isNumber(this.url))
+				Parser.getFeedInFacebookURl(this);
+			if(this.url.startsWith("@") || this.url.startsWith("#"))
+				Parser.getFeedInTwitter(this);
 			else
-				Parser.getFeedInXMLURL(this.url, this.limit, this.feedChildList);
+				Parser.getFeedInXMLURL(this);
 		}
 		catch(Exception e){}
 		finally {runNum++;	} // 실행이 끝나면 횟수를 증가시킨다.

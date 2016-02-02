@@ -8,6 +8,7 @@ public class FeedChild {
 	public String postContent;	// 포스트의 내용
 	public String postDate;		// 포스트의 날짜
 	public String postLink;		// 포스트의 주소
+	public String parentTitle;		// 포스트의 주소
 	public boolean clicked;		// 클릭 여부(이부분은 추후 개발 예정)
 	
 	public FeedChild(){
@@ -17,6 +18,7 @@ public class FeedChild {
 		this.postContent = new String("");
 		this.postDate = new String("");
 		this.postLink = new String("");
+		this.parentTitle=new String("");
 		this.clicked = false;
 	}
 }

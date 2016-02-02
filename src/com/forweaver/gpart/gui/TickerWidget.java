@@ -90,7 +90,7 @@ public class TickerWidget extends Dialog {
 				gcImage.fillRectangle(image.getBounds());
 				gcImage.setFont(font);
 				gcImage.setClipping(0, 0, shell.getSize().x,shell.getSize().y);
-
+				
 				for(FeedChild fc : Feed.getInstance().getFlattenChildList()){
 					// 피드의 내용을 확인하여 티커창 안에 피드가 위치하면 화면에 그림
 					if(fc.x>-fc.width && fc.x <shell.getSize().x)
@@ -211,7 +211,8 @@ public class TickerWidget extends Dialog {
 							e.x <= fc.x+fc.width && 
 							e.x<=shell.getSize().x-10 &&
 							fc.postContent.length() >= 3 ){	 
-						tip.setText(fc.postDate);
+						
+						tip.setText(fc.parentTitle+"\n\n"+fc.postDate);
 						canvas.setCursor(cursorHand);
 
 						if(shell.getLocation().y <= 750)
