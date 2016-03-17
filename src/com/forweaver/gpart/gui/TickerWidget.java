@@ -121,6 +121,8 @@ public class TickerWidget extends Dialog {
 		// 티커 크기 조절시 커서
 		final Cursor cursorSizeEE = new Cursor(Display.getDefault(), SWT.CURSOR_SIZEE);
 
+		tip.setAutoHide(false);
+		
 		canvas.addMouseMoveListener(new MouseMoveListener() {
 
 			public void mouseMove(MouseEvent e) {
