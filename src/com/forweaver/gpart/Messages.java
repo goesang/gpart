@@ -25,6 +25,7 @@ public class Messages extends NLS {
 	public static String PreferrenceWidget_feedError;
 	public static String PreferrenceWidget_feedItem;
 	public static String PreferrenceWidget_feedLimit;
+	public static String PreferrenceWidget_feedLimitDate;
 	public static String PreferrenceWidget_feedTitle;
 	public static String PreferrenceWidget_feedUrl;
 	public static String PreferrenceWidget_fontColor;

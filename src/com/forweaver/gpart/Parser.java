@@ -3,17 +3,26 @@ package com.forweaver.gpart;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.pojava.datetime.DateTime;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import facebook4j.Facebook;
+import facebook4j.FacebookException;
+import facebook4j.FacebookFactory;
+import facebook4j.Group;
+import facebook4j.Page;
+import facebook4j.Post;
+import facebook4j.Reading;
+import facebook4j.auth.AccessToken;
 import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -23,14 +32,6 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.conf.ConfigurationBuilder;
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.FacebookFactory;
-import facebook4j.Group;
-import facebook4j.Page;
-import facebook4j.Post;
-import facebook4j.Reading;
-import facebook4j.auth.AccessToken;
 
 public class Parser {
 
@@ -145,14 +146,16 @@ public class Parser {
 			if(status.getText() != null){
 				FeedChild fc = new FeedChild();
 
-				fc.postDate =status.getCreatedAt().toString();
+				fc.postDate =status.getCreatedAt();
 				fc.postContent = "@" + status.getUser().getScreenName() + " - " + status.getText();
 				fc.parentTitle = fp.title;
 				fc.postContent = fc.postContent.replaceAll("\\<[^>]*>","");
 				fc.postContent= fc.postContent.replaceAll("\r|\n|&nbsp;","").trim();
 				fc.postTitle = fc.postContent;
 				fc.postLink = "https://twitter.com/"+status.getUser().getScreenName()+"/status/"+status.getId();
-				fp.feedChildList.add(fc);
+
+				if(limitDateCheck(fc.postDate))
+					fp.feedChildList.add(fc);
 			}
 	}
 
@@ -172,16 +175,18 @@ public class Parser {
 			if(feed.getMessage() != null){
 				FeedChild fc = new FeedChild();
 				if(feed.getCreatedTime()!=null)
-					fc.postDate =feed.getCreatedTime().toString();
+					fc.postDate =feed.getCreatedTime();
 				else
-					fc.postDate =feed.getUpdatedTime().toString();
+					fc.postDate =feed.getUpdatedTime();
 				fc.postContent = feed.getMessage();
 				fc.parentTitle = fp.title;
 				fc.postContent = fc.postContent.replaceAll("\\<[^>]*>","");
 				fc.postContent= fc.postContent.replaceAll("\r|\n|&nbsp;","").trim();
 				fc.postTitle = fc.postContent;
 				fc.postLink = "https://www.facebook.com/"+feed.getId();
-				fp.feedChildList.add(fc);
+
+				if(limitDateCheck(fc.postDate))
+					fp.feedChildList.add(fc);
 			}
 
 
@@ -195,6 +200,7 @@ public class Parser {
 		URLConnection conn = url.openConnection();
 		conn.setRequestProperty("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0");
 		conn.connect();
+		
 		Document doc = builder.parse(conn.getInputStream(),"utf-8");
 		doc.getDocumentElement().normalize();
 
@@ -204,7 +210,7 @@ public class Parser {
 			isRss= true;
 
 		NodeList itemLst;
-
+		
 		if(isRss)
 			itemLst = doc.getElementsByTagName("item"); //RSS라면 item을
 		else
@@ -215,7 +221,7 @@ public class Parser {
 			Element itemTmp = (Element)item;
 
 			FeedChild fc = new FeedChild();
-
+			
 			NodeList title = itemTmp.getElementsByTagName("title");
 			NodeList link = itemTmp.getElementsByTagName("link");
 			NodeList description;
@@ -235,15 +241,17 @@ public class Parser {
 					date = itemTmp.getElementsByTagName("updated");
 				Element element = (Element) link.item(0);
 				fc.postLink = element.getAttribute("href");
-			}				
+			}		
+			
 			fc.postTitle = title.item(0).getTextContent();
 			fc.parentTitle = fp.title;
-			fc.postDate = date.item(0).getTextContent();
+			fc.postDate = new DateTime(date.item(0).getTextContent()).toDate();
 			fc.postContent = description.item(0).getTextContent();
 			fc.postContent = fc.postContent.replaceAll("\\<[^>]*>","");
 			fc.postContent= fc.postContent.replaceAll("\r|\n|&nbsp;","").trim();
 
-			fp.feedChildList.add(fc);
+			if(limitDateCheck(fc.postDate))
+				fp.feedChildList.add(fc);
 		}
 
 	}
@@ -273,5 +281,16 @@ public class Parser {
 			return true ;
 		}catch(Exception e){}
 		return false ;
+	}
+
+	public static boolean limitDateCheck(Date date){
+
+		long after =  new Date ().getTime() - date.getTime();
+		int dDay = (int)Math.floor(after/(1000*60*60*24)+1);
+		
+		if(dDay >PreInfo.getInstance().limitDate)
+			return false;
+
+		return true;
 	}
 }

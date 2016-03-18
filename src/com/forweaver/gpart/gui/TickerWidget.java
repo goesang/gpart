@@ -124,7 +124,7 @@ public class TickerWidget extends Dialog {
 		tip.setAutoHide(false);
 		
 		canvas.addMouseMoveListener(new MouseMoveListener() {
-
+			
 			public void mouseMove(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if (origin != null) {	// 티커 이동 및 티커 조절을 위한 Point 생성
@@ -214,7 +214,7 @@ public class TickerWidget extends Dialog {
 							e.x<=shell.getSize().x-10 &&
 							fc.postContent.length() >= 3 ){	 
 						
-						tip.setText(fc.parentTitle+"\n\n"+fc.postDate);
+						tip.setText(fc.parentTitle+"\n\n "+fc.getPostFormatDate());
 						canvas.setCursor(cursorHand);
 
 						if(shell.getLocation().y <= 750)
@@ -224,7 +224,6 @@ public class TickerWidget extends Dialog {
 						else 
 							tip.setLocation(shell.getLocation().x+e.x, 
 									shell.getLocation().y-6);
-
 						tip.setMessage(fc.postContent);
 						tip.setVisible(true);
 						canvas.setFocus();
@@ -241,7 +240,10 @@ public class TickerWidget extends Dialog {
 
 	public void show(){ // 티커를 보여줌
 		shell.setVisible(true);
-		shell.forceActive();
+		if(PreInfo.getInstance().onTop)	{
+			this.shell.forceActive();
+			this.shell.forceFocus();
+		}
 		hide = false;
 	}
 
@@ -250,16 +252,18 @@ public class TickerWidget extends Dialog {
 
 		PreInfo.getInstance().load(); // 티커를 설정하는 정보를 불러옴
 
-		if(PreInfo.getInstance().onTop)
-			shell = new Shell(getParent(), SWT.ON_TOP);
-		else
-			shell = new Shell(getParent(), SWT.NONE);
+		if(PreInfo.getInstance().onTop)	{
+			this.shell = new Shell(getParent(), SWT.ON_TOP);
+			this.shell.forceActive();
+			this.shell.forceFocus();
+		}else
+			this.shell = new Shell(getParent(), SWT.NONE);
 
 		this.shell.setSize(PreInfo.getInstance().width, PreInfo.getInstance().fontHeight+8);
 		this.shell.setLocation(PreInfo.getInstance().positionX, PreInfo.getInstance().positionY);
 		this.shell.setText(getText());
 		this.shell.setLayout(new FillLayout());
-
+		
 		this.canvas = new Canvas(shell, SWT.NO_BACKGROUND|SWT.NO_REDRAW_RESIZE|SWT.NO_MERGE_PAINTS| SWT.DOUBLE_BUFFERED); // 더블 버퍼 옵션
 		this.canvas.setBackground(new Color(Display.getDefault(),PreInfo.getInstance().backgroundColor));
 		this.canvas.setForeground(new Color(Display.getDefault(),PreInfo.getInstance().fontColor));
@@ -274,10 +278,14 @@ public class TickerWidget extends Dialog {
 		PreInfo.getInstance().load();
 		Shell shellTmp,delTmp;
 
-		if(PreInfo.getInstance().onTop)	
+		if(PreInfo.getInstance().onTop)	{
 			shellTmp = new Shell(getParent(), SWT.ON_TOP);
+			this.shell.forceActive();
+			this.shell.forceFocus();
+		}
 		else			
 			shellTmp = new Shell(getParent(), SWT.NONE);
+
 
 		delTmp = shell;
 		shell = shellTmp;

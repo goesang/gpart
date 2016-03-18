@@ -198,6 +198,11 @@
 			<artifactId>twitter4j-core</artifactId>
 			<version>4.0.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.pojava</groupId>
+			<artifactId>pojava</artifactId>
+			<version>2.3.0</version>
+		</dependency>
 	</dependencies>
 
 </project>

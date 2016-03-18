@@ -46,7 +46,6 @@ public class Feed {
 			this.feedParentList.add(new FeedParent(strTmp.split("@w@")[0],
 					strTmp.split("@w@")[1],
 					Integer.parseInt(strTmp.split("@w@")[2])));
-			
 		ExecutorService indexLoadService = //쓰레드 풀 생성
 			Executors.newFixedThreadPool(this.feedParentList.size());
 			

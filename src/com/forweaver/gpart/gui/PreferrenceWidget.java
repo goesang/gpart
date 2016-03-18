@@ -1,11 +1,6 @@
 package com.forweaver.gpart.gui;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
@@ -48,15 +43,11 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.forweaver.gpart.Feed;
 import com.forweaver.gpart.Messages;
-import com.forweaver.gpart.PreInfo;
 import com.forweaver.gpart.Parser;
+import com.forweaver.gpart.PreInfo;
 
 //SWT로 구현한 프로그램의 환경설정창
 public class PreferrenceWidget extends Dialog {
@@ -125,13 +116,13 @@ public class PreferrenceWidget extends Dialog {
 	 */
 	private void createContents() {
 
-		shell = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.PRIMARY_MODAL);
-		shell.setSize(410, 519);
+		shell = new Shell(getParent(), SWT.ON_TOP | SWT.DIALOG_TRIM);
+		shell.setSize(410, 539);
 		shell.setText(getText());
 
 
 		final Shell shlGpartPreferrence = shell;
-		shlGpartPreferrence.setSize(410, 483);
+		shlGpartPreferrence.setSize(410, 503);
 		shlGpartPreferrence.setText(Messages.PreferrenceWidget_title);
 
 
@@ -151,7 +142,7 @@ public class PreferrenceWidget extends Dialog {
 		composite.setLayoutData(fd_composite);
 
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
-		tabFolder.setBounds(0, 0, 385, 417);
+		tabFolder.setBounds(0, 0, 385, 427);
 		// 첫번째 칼럼이 시작되는 코드 부분
 		TabItem tbtmWidget = new TabItem(tabFolder, SWT.NONE);
 		tbtmWidget.setText(Messages.PreferrenceWidget_widget);
@@ -216,6 +207,18 @@ public class PreferrenceWidget extends Dialog {
 		spinDescLength.setLocation(240, 340);
 		spinDescLength.setSize(120, 25);
 		spinDescLength.setValues(PreInfo.getInstance().descLength, 0, 500, 0, 50, 100);
+
+
+		// 피드의 유통 기한 조정
+		Label labelFeedlimitDate = new Label(compoWidget, SWT.NONE);
+		labelFeedlimitDate.setBounds(30, 373, 131, 20);
+		labelFeedlimitDate.setText(Messages.PreferrenceWidget_feedLimitDate);
+
+		final Spinner spinFeedlimitDate = new Spinner(compoWidget, SWT.BORDER);
+		spinFeedlimitDate.setLocation(240, 370);
+		spinFeedlimitDate.setSize(120, 25);
+		spinFeedlimitDate.setValues(PreInfo.getInstance().limitDate, 0, 500, 0, 1, 10);
+
 		// 글꼴 설정
 		Label labelFontStyle = new Label(compoWidget, SWT.NONE);
 		labelFontStyle.setLocation(30, 123);
@@ -361,33 +364,33 @@ public class PreferrenceWidget extends Dialog {
 
 					if (column == 2) {	// 두번째 칼럼을 클릭했을때
 						final Spinner spin = new Spinner(table, SWT.NONE);
-					spin.setValues(Integer.parseInt(item.getText(column)), 0, 30, 0, 1, 5);
-					// spinner를 생성한다.
-					editor.minimumWidth = 48;
-					table.getColumn(column).setWidth(editor.minimumWidth);
+						spin.setValues(Integer.parseInt(item.getText(column)), 0, 30, 0, 1, 5);
+						// spinner를 생성한다.
+						editor.minimumWidth = 48;
+						table.getColumn(column).setWidth(editor.minimumWidth);
 
-					spin.setFocus();
-					editor.setEditor(spin, item, column);
+						spin.setFocus();
+						editor.setEditor(spin, item, column);
 
-					final int col = column;
-					spin.addSelectionListener(new SelectionAdapter() {
-						public void widgetSelected(SelectionEvent event) {
-							item.setText(col, spin.getText());
-						}
-					});
+						final int col = column;
+						spin.addSelectionListener(new SelectionAdapter() {
+							public void widgetSelected(SelectionEvent event) {
+								item.setText(col, spin.getText());
+							}
+						});
 
-					spin.addFocusListener(new FocusListener() {
+						spin.addFocusListener(new FocusListener() {
 
-						public void focusLost(FocusEvent arg0) {
-							// TODO Auto-generated method stub
-							spin.setVisible(false);
-						}
+							public void focusLost(FocusEvent arg0) {
+								// TODO Auto-generated method stub
+								spin.setVisible(false);
+							}
 
-						public void focusGained(FocusEvent arg0) {
-							// TODO Auto-generated method stub
+							public void focusGained(FocusEvent arg0) {
+								// TODO Auto-generated method stub
 
-						}
-					});
+							}
+						});
 
 					}else{
 						final Text text = new Text(table, SWT.NONE);
@@ -463,15 +466,15 @@ public class PreferrenceWidget extends Dialog {
 		btnAdd.addSelectionListener(new SelectionAdapter() { //피드를 추가하는 부분
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+
 				String urlStr = textURL.getText();
 				textURL.setText("");
 				try{
 					String title = "";
-					
+
 					if(urlStr.startsWith("https://www.facebook.com") && !urlStr.contains("/feeds/") || Parser.isNumber(urlStr)) // facebook
 						title = Parser.getTitleInFacebookURL(urlStr);
-					else if(urlStr.startsWith("@") || urlStr.startsWith("#")) // twitter
+					if(urlStr.startsWith("@") || urlStr.startsWith("#")) // twitter
 						title = Parser.getTitleInTwitter(urlStr);
 					else
 						title = Parser.getTitleInXMLURL(urlStr); // rss or atom
@@ -567,7 +570,8 @@ public class PreferrenceWidget extends Dialog {
 						buttonOnTop.getSelection(),
 						defaultFont, 
 						canvasFontColor.getBackground().getRGB(), 
-						canvasBackGroundColor.getBackground().getRGB(), 
+						canvasBackGroundColor.getBackground().getRGB(),
+						spinFeedlimitDate.getSelection(),
 						feedItemList);
 				text.dispose();
 				shlGpartPreferrence.dispose();

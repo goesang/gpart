@@ -66,7 +66,7 @@ public class AboutWidget extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shell = new Shell(getParent(), SWT.DIALOG_TRIM);
+		shell = new Shell(getParent(), SWT.ON_TOP | SWT.DIALOG_TRIM);
 		shell.setLayout(null);
 		shell.setSize(273, 344);
 		shell.setText(Messages.AboutWidget_about);
