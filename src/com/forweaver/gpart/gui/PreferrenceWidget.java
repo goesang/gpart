@@ -116,7 +116,7 @@ public class PreferrenceWidget extends Dialog {
 	 */
 	private void createContents() {
 
-		shell = new Shell(getParent(), SWT.ON_TOP | SWT.DIALOG_TRIM);
+		shell = new Shell();
 		shell.setSize(410, 539);
 		shell.setText(getText());
 

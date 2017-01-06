@@ -66,7 +66,7 @@ public class AboutWidget extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {
-		shell = new Shell(getParent(), SWT.ON_TOP | SWT.DIALOG_TRIM);
+		shell = new Shell();
 		shell.setLayout(null);
 		shell.setSize(273, 344);
 		shell.setText(Messages.AboutWidget_about);
@@ -150,7 +150,7 @@ public class AboutWidget extends Dialog {
 
 	}
 	private void createContentsCredits(){
-		final Shell shlCredits = new Shell(shell,SWT.DIALOG_TRIM);
+		final Shell shlCredits = new Shell();
 		shlCredits.setSize(249, 250);
 		shlCredits.setText(Messages.AboutWidget_credits);
 		Monitor primary = Display.getDefault().getPrimaryMonitor();

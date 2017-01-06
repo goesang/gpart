@@ -253,17 +253,16 @@ public class TickerWidget extends Dialog {
 		PreInfo.getInstance().load(); // 티커를 설정하는 정보를 불러옴
 
 		if(PreInfo.getInstance().onTop)	{
-			this.shell = new Shell(getParent(), SWT.ON_TOP);
+			this.shell = new Shell(SWT.ON_TOP | SWT.NO_TRIM);
 			this.shell.forceActive();
 			this.shell.forceFocus();
 		}else
-			this.shell = new Shell(getParent(), SWT.NONE);
+			this.shell = new Shell(SWT.NONE | SWT.NO_TRIM);
 
 		this.shell.setSize(PreInfo.getInstance().width, PreInfo.getInstance().fontHeight+8);
 		this.shell.setLocation(PreInfo.getInstance().positionX, PreInfo.getInstance().positionY);
 		this.shell.setText(getText());
-		this.shell.setLayout(new FillLayout());
-		
+		this.shell.setLayout(new FillLayout());		
 		this.canvas = new Canvas(shell, SWT.NO_BACKGROUND|SWT.NO_REDRAW_RESIZE|SWT.NO_MERGE_PAINTS| SWT.DOUBLE_BUFFERED); // 더블 버퍼 옵션
 		this.canvas.setBackground(new Color(Display.getDefault(),PreInfo.getInstance().backgroundColor));
 		this.canvas.setForeground(new Color(Display.getDefault(),PreInfo.getInstance().fontColor));
@@ -279,12 +278,12 @@ public class TickerWidget extends Dialog {
 		Shell shellTmp,delTmp;
 
 		if(PreInfo.getInstance().onTop)	{
-			shellTmp = new Shell(getParent(), SWT.ON_TOP);
+			shellTmp = new Shell(getParent(),SWT.ON_TOP | SWT.NO_TRIM);
 			this.shell.forceActive();
 			this.shell.forceFocus();
 		}
 		else			
-			shellTmp = new Shell(getParent(), SWT.NONE);
+			shellTmp = new Shell(getParent(),SWT.NONE | SWT.NO_TRIM);
 
 
 		delTmp = shell;

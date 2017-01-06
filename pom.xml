@@ -19,10 +19,6 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>swt-repo</id>
-			<url>https://swt-repo.googlecode.com/svn/repo/</url>
-		</repository>
-		<repository>
 			<id>swt-repo2</id>
 			<url>http://maven-eclipse.github.io/maven</url>
 		</repository>
@@ -174,9 +170,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.eclipse.jface</groupId>
-			<artifactId>org.eclipse.jface</artifactId>
-			<version>3.8.0.v20120521-2329</version>
+			<groupId>org.eclipse</groupId>
+			<artifactId>jface</artifactId>
+			<version>3.2.1-M20060908-1000</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
@@ -186,7 +182,7 @@
 		<dependency>
 			<groupId>org.eclipse.swt</groupId>
 			<artifactId>${swt.artifactId}</artifactId>
-			<version>4.3.2</version>
+			<version>4.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.facebook4j</groupId>

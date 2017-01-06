@@ -65,7 +65,7 @@ public class TrayWidget extends Dialog {
 	 * Create contents of the dialog.
 	 */
 	private void createContents() {	
-		shell = new Shell(getParent(), getStyle());
+		shell = new Shell(getStyle());
 		shell.setSize(450, 300);
 		shell.setText(getText());
 		// 트레이의 아이콘을 불러옴
