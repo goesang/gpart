@@ -13,11 +13,13 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolTip;
 
@@ -203,6 +205,12 @@ public class TickerWidget extends Dialog {
 			}
 			public void mouseHover(MouseEvent e) {
 				// 티커안에 마우스가 떠있는 경우
+				
+				Monitor primary = Display.getDefault().getPrimaryMonitor();
+			 	Rectangle bounds = primary.getBounds();
+			    
+
+				
 				autoScroll = false; // 자동 스크롤을 멈춤
 				tip.setVisible(false);
 				canvas.setCursor(cursorArrow);
@@ -217,13 +225,12 @@ public class TickerWidget extends Dialog {
 						tip.setText(fc.parentTitle+"\n\n "+fc.getPostFormatDate());
 						canvas.setCursor(cursorHand);
 
-						if(shell.getLocation().y <= 750)
+						if(shell.getLocation().y <= bounds.height - 165)
 							tip.setLocation(shell.getLocation().x+e.x, 
-									shell.getLocation().y+
-									PreInfo.getInstance().fontHeight+10);
+									shell.getLocation().y+ shell.getBounds().height);
 						else 
 							tip.setLocation(shell.getLocation().x+e.x, 
-									shell.getLocation().y-6);
+									shell.getLocation().y);
 						tip.setMessage(fc.postContent);
 						tip.setVisible(true);
 						canvas.setFocus();
@@ -253,11 +260,11 @@ public class TickerWidget extends Dialog {
 		PreInfo.getInstance().load(); // 티커를 설정하는 정보를 불러옴
 
 		if(PreInfo.getInstance().onTop)	{
-			this.shell = new Shell(SWT.ON_TOP | SWT.NO_TRIM);
+			this.shell = new Shell(getParent() ,SWT.ON_TOP | SWT.NO_TRIM);
 			this.shell.forceActive();
 			this.shell.forceFocus();
 		}else
-			this.shell = new Shell(SWT.NONE | SWT.NO_TRIM);
+			this.shell = new Shell(getParent(),SWT.NONE | SWT.NO_TRIM);
 
 		this.shell.setSize(PreInfo.getInstance().width, PreInfo.getInstance().fontHeight+8);
 		this.shell.setLocation(PreInfo.getInstance().positionX, PreInfo.getInstance().positionY);
