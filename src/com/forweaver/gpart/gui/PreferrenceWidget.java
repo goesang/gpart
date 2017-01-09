@@ -117,12 +117,12 @@ public class PreferrenceWidget extends Dialog {
 	private void createContents() {
 
 		shell = new Shell();
-		shell.setSize(410, 539);
+		shell.setSize(410, 559);
 		shell.setText(getText());
 
 
 		final Shell shlGpartPreferrence = shell;
-		shlGpartPreferrence.setSize(410, 503);
+		shlGpartPreferrence.setSize(410, 523);
 		shlGpartPreferrence.setText(Messages.PreferrenceWidget_title);
 
 
@@ -142,7 +142,7 @@ public class PreferrenceWidget extends Dialog {
 		composite.setLayoutData(fd_composite);
 
 		TabFolder tabFolder = new TabFolder(composite, SWT.NONE);
-		tabFolder.setBounds(0, 0, 385, 427);
+		tabFolder.setBounds(0, 0, 385, 447);
 		// 첫번째 칼럼이 시작되는 코드 부분
 		TabItem tbtmWidget = new TabItem(tabFolder, SWT.NONE);
 		tbtmWidget.setText(Messages.PreferrenceWidget_widget);
@@ -329,7 +329,7 @@ public class PreferrenceWidget extends Dialog {
 
 		TableViewer tableViewer = new TableViewer(compoFeedItem, SWT.BORDER | SWT.FULL_SELECTION);
 		table = tableViewer.getTable();
-		table.setBounds(10, 10, 361, 304);
+		table.setBounds(10, 10, 361, 324);
 		table.setHeaderVisible(true);
 		table.setToolTipText(Messages.PreferrenceWidget_tableTooltip);
 
@@ -446,10 +446,10 @@ public class PreferrenceWidget extends Dialog {
 		}
 
 		final Text textURL = new Text(compoFeedItem, SWT.BORDER);
-		textURL.setBounds(47, 320, 324, 25);
+		textURL.setBounds(47, 340, 324, 25);
 
 		Label labelUrl = new Label(compoFeedItem, SWT.NONE);
-		labelUrl.setBounds(10, 323, 38, 20);
+		labelUrl.setBounds(10, 343, 38, 20);
 		labelUrl.setText(Messages.PreferrenceWidget_url);
 
 		Button btnRemove = new Button(compoFeedItem, SWT.NONE);
@@ -459,7 +459,7 @@ public class PreferrenceWidget extends Dialog {
 				table.remove(table.getSelectionIndices());
 			}
 		});
-		btnRemove.setBounds(296, 351, 77, 27);
+		btnRemove.setBounds(296, 371, 77, 27);
 		btnRemove.setText(Messages.PreferrenceWidget_remove);
 
 		Button btnAdd = new Button(compoFeedItem, SWT.NONE);
@@ -493,7 +493,7 @@ public class PreferrenceWidget extends Dialog {
 				}
 			}
 		});
-		btnAdd.setBounds(213, 351, 77, 27);
+		btnAdd.setBounds(213, 371, 77, 27);
 		btnAdd.setText(Messages.PreferrenceWidget_add);
 
 		Button btnUp = new Button(compoFeedItem, SWT.NONE);
@@ -513,7 +513,7 @@ public class PreferrenceWidget extends Dialog {
 				table.setSelection(preIndex);
 			}
 		});
-		btnUp.setBounds(47, 351, 77, 27);
+		btnUp.setBounds(47, 371, 77, 27);
 		btnUp.setText(Messages.PreferrenceWidget_up);
 
 		Button btnDown = new Button(compoFeedItem, SWT.NONE);
@@ -534,13 +534,13 @@ public class PreferrenceWidget extends Dialog {
 			}
 		});
 		btnDown.setText(Messages.PreferrenceWidget_down);
-		btnDown.setBounds(130, 351, 77, 27);
+		btnDown.setBounds(130, 371, 77, 27);
 
 		Composite compoButton = new Composite(shlGpartPreferrence, SWT.NONE);
 		FormData fd_compoButton = new FormData();
 		fd_compoButton.right = new FormAttachment(composite, 0, SWT.RIGHT);
 		fd_compoButton.bottom = new FormAttachment(100, -6);
-		fd_compoButton.top = new FormAttachment(0, 431);
+		fd_compoButton.top = new FormAttachment(0, 451);
 		fd_compoButton.left = new FormAttachment(0, 187);
 		compoButton.setLayoutData(fd_compoButton);
 
