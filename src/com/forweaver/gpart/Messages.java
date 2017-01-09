@@ -21,7 +21,6 @@ public class Messages extends NLS {
 	public static String PreferrenceWidget_cancel;
 	public static String PreferrenceWidget_color;
 	public static String PreferrenceWidget_desc;
-	public static String PreferrenceWidget_down;
 	public static String PreferrenceWidget_feedError;
 	public static String PreferrenceWidget_feedItem;
 	public static String PreferrenceWidget_feedLimit;
@@ -39,7 +38,6 @@ public class Messages extends NLS {
 	public static String PreferrenceWidget_tableTooltip;
 	public static String PreferrenceWidget_title;
 	public static String PreferrenceWidget_top;
-	public static String PreferrenceWidget_up;
 	public static String PreferrenceWidget_update;
 	public static String PreferrenceWidget_url;
 	public static String PreferrenceWidget_urlError;

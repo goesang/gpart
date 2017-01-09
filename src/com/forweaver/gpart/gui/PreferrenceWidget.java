@@ -514,7 +514,7 @@ public class PreferrenceWidget extends Dialog {
 			}
 		});
 		btnUp.setBounds(47, 371, 77, 27);
-		btnUp.setText(Messages.PreferrenceWidget_up);
+		btnUp.setText("▲");
 
 		Button btnDown = new Button(compoFeedItem, SWT.NONE);
 		btnDown.addSelectionListener(new SelectionAdapter() {
@@ -533,7 +533,7 @@ public class PreferrenceWidget extends Dialog {
 
 			}
 		});
-		btnDown.setText(Messages.PreferrenceWidget_down);
+		btnDown.setText("▼");
 		btnDown.setBounds(130, 371, 77, 27);
 
 		Composite compoButton = new Composite(shlGpartPreferrence, SWT.NONE);
