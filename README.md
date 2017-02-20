@@ -1,6 +1,6 @@
 GPART 0.3
 =======
-![](http://dev.naver.com/wiki/gpart/pds/FrontPage/1.png)
+![](https://raw.githubusercontent.com/goesang/gpart/master/screenshots/1.png)
 
 모든 데스크탑 플랫폼에 돌아가는 티커 형식의 RSS 구독기입니다.
 처음 이 프로그램은 학교내 공모전 출품작으로 리눅스 그놈 패널에서만 동작하도록 만들어진 패널 애플릿이였지만, JAVA [SWT](http://www.eclipse.org/swt/ ) 기반으로 다시 만들어 모든 데스크탑 운영체제( All Desktop OS)에서 사용할 수 있습니다.
@@ -12,7 +12,7 @@ JAVA [뉴스 티커](http://en.wikipedia.org/wiki/News_ticker)처럼 화면에 �
 
 ###사용법 ( Tutorial )
 #### 티커 기본 조작 방법 ( Ticker Basic Control )
-![](http://dev.naver.com/wiki/gpart/pds/FrontPage/2_1.png)
+![](https://raw.githubusercontent.com/goesang/gpart/master/screenshots/2_1.png)
 
  * 마우스 오른쪽 버튼 클릭 + 드래그  =>  티커 이동 
 ( Mouse Right Button Clcik + Drag => Ticker moving )
@@ -26,7 +26,7 @@ JAVA [뉴스 티커](http://en.wikipedia.org/wiki/News_ticker)처럼 화면에 �
 ( The right side of ticker + Mouse Right Button Clcik + Drag  => Ticker resize )
 
 #### 트레이 기본 조작 방법 ( Tray Basic Control )
-![](http://dev.naver.com/wiki/gpart/pds/FrontPage/3_1.png)
+![](https://raw.githubusercontent.com/goesang/gpart/master/screenshots/3_1.png)
  * 마우스 왼쪽 버튼 클릭 =>  티커 숨김
 ( Mouse Left Button Clcik => Ticker Hide )
  * 마우스 오른쪽 버튼 클릭 =>  메뉴 보기 
@@ -36,7 +36,7 @@ JAVA [뉴스 티커](http://en.wikipedia.org/wiki/News_ticker)처럼 화면에 �
 
  * 프로그램이 자바로 작성되었기 때문에 [자바 실행 버젼]( http://www.oracle.com/technetwork/java/javase/downloads/index.html )을 먼저 설치하시기 바랍니다.
 
- * [윈도우 버젼(Window version)](http://dev.naver.com/projects/gpart/download/3609?filename=Setup.exe)은 그냥 받으셔서 설치하시면 됩니다.
+ * [윈도우 버젼(Window version)](http://www.softpedia.com/get/Internet/News-Newsgroups-Blog-Tools/GPART.shtml)은 그냥 받으셔서 설치하시면 됩니다.
 
  * [리눅스 버젼(Linux version)](http://dev.naver.com/projects/gpart/download/3610?filename=gpart-rss_0.2.tar.gz )은 ALL 버젼의 경우 
   설치(Insert)는' sudo make install '로 설치하시면 됩니다. 
@@ -51,7 +51,7 @@ JAVA [뉴스 티커](http://en.wikipedia.org/wiki/News_ticker)처럼 화면에 �
   삭제(Delete)는 ' sudo rpm -e gpart-rss ' 명령으로 합니다.
 
  * 참고로 Linux  gnome 2.X 의 경우 아래 스샷처럼 메뉴에서 바로가기를 찾으실 수 있습니다.
-![](http://dev.naver.com/wiki/gpart/pds/FrontPage/11.png )
+![](https://raw.githubusercontent.com/goesang/gpart/master/screenshots/11.png )
 
 * Linux 상에서는 Console에 ' java -jar /usr/share/GPART/gpart.jar ' 을 입력하셔서 실행(excute)하시면 됩니다. 
 
